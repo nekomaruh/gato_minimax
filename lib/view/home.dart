@@ -9,7 +9,9 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Gato - Algoritmo Minimax'),
-        actions: [IconButton(icon: Icon(Icons.info_outline), onPressed: () {})],
+        actions: [
+          IconButton(icon: Icon(CupertinoIcons.info), onPressed: () {})
+        ],
       ),
       body: Row(
         children: [Expanded(child: GameView()), Expanded(child: GamePanel())],
@@ -69,9 +71,15 @@ class GamePanel extends StatelessWidget {
           'Configurar nodos',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        drop(context),
+
         SizedBox(
-          height: 20,
+          height: 10,
+        ),
+        selectPlayer(context),
+        selectK(context),
+
+        SizedBox(
+          height: 10,
         ),
         Wrap(
           spacing: 10,
@@ -84,14 +92,30 @@ class GamePanel extends StatelessWidget {
       ],
     );
   }
+
+  selectPlayer(BuildContext context) {
+    final provider = Provider.of<PanelProvider>(context);
+    return Row(
+      children: [
+        Text(
+          'Jugar primero:',
+        ),
+        SizedBox(width: 10,),
+        Checkbox(
+            value: provider.firstPlayer,
+            onChanged: (v) => provider.firstPlayer = v)
+      ],
+    );
+  }
 }
 
-drop(BuildContext context) {
+selectK(BuildContext context) {
   List<int> d = [2, 3, 4, 5, 6, 7, 8, 9, 10];
   final panelProvider = Provider.of<PanelProvider>(context);
   return Row(
     children: [
-      Text('Valor de K:     '),
+      Text('Valor de K:'),
+      SizedBox(width: 10,),
       DropdownButton<int>(
         value: panelProvider.kValue,
         items: d
