@@ -14,6 +14,7 @@ class GameInterfaceImpl implements GameInterface{
     final provider = Provider.of<GameProvider>(context, listen: false);
     provider.isPlaying = false;
     provider.reload = false;
+    provider.logs.clear();
   }
 
 }
