@@ -5,6 +5,7 @@ class GameProvider extends ChangeNotifier{
   bool _firstPlayer = false;
   bool _isPlaying = false;
   bool _reload = false;
+  List<String> _logs = [];
 
   int get kValue => _kValue;
 
@@ -31,6 +32,13 @@ class GameProvider extends ChangeNotifier{
 
   set isPlaying(bool value) {
     _isPlaying = value;
+    notifyListeners();
+  }
+
+  List<String> get logs => _logs;
+
+  set logs(List<String> value) {
+    _logs = value;
     notifyListeners();
   }
 }

@@ -52,20 +52,7 @@ class GamePanel extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               child: Container(
                 color: Colors.grey[200],
-                child: Scrollbar(
-                  child: ListView(
-                    //reverse: true,
-                    physics: ClampingScrollPhysics(),
-                    padding: EdgeInsets.all(10),
-                    children: [
-                      Text('Jugador: [0,1]'),
-                      Text(''),
-                      Text('Máquina:'),
-                      Text('Min nivel 2 -> h=2, h=3, h=-1'),
-                      Text('Min nivel 2 -> h=2, h=3, h=-1'),
-                    ],
-                  ),
-                ),
+                child: Scrollbar(child: _logList(context)),
               ),
             ),
           ),
@@ -145,5 +132,18 @@ class GamePanel extends StatelessWidget {
         onPressed:
             provider.isPlaying == true ? () => game.reload(context) : null,
         child: Text('Reiniciar'));
+  }
+
+  _logList(BuildContext context) {
+    final provider = Provider.of<GameProvider>(context);
+    return ListView.builder(
+      //reverse: true,
+      physics: ClampingScrollPhysics(),
+      padding: EdgeInsets.all(10),
+      itemCount: provider.logs.length,
+      itemBuilder: (context,i){
+        return Text('${provider.logs[i]}');
+      },
+    );
   }
 }
