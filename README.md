@@ -1,6 +1,6 @@
 # algoritmo_minimax
 
-A new Flutter application.
+Juego gato (3 en raya) utilizando algoritmo Minimax.
 
 ## Getting Started
 
