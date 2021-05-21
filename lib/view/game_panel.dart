@@ -27,8 +27,8 @@ class GamePanel extends StatelessWidget {
             spacing: 10,
             //runSpacing: 15,
             children: [
-              selectPlayer(context),
-              selectK(context),
+              _selectPlayer(context),
+              _selectK(context),
             ],
           ),
           SizedBox(
@@ -41,7 +41,7 @@ class GamePanel extends StatelessWidget {
             children: [
               _playBtn(context),
               _playRandomBtn(context),
-              _reloadBtn(context)
+              _resetBtn(context)
             ],
           ),
           SizedBox(
@@ -61,7 +61,8 @@ class GamePanel extends StatelessWidget {
     );
   }
 
-  selectPlayer(BuildContext context) {
+  /* Jugador que comienza primero */
+  Widget _selectPlayer(BuildContext context) {
     final provider = Provider.of<GameProvider>(context);
     return Container(
       height: 50,
@@ -82,7 +83,8 @@ class GamePanel extends StatelessWidget {
     );
   }
 
-  selectK(BuildContext context) {
+  /* Lista de selección de valor K */
+  Widget _selectK(BuildContext context) {
     List<int> d = [1, 2, 3];
     final panelProvider = Provider.of<GameProvider>(context);
     return Row(
@@ -106,7 +108,8 @@ class GamePanel extends StatelessWidget {
     );
   }
 
-  _playBtn(context) {
+  /* Boton de jugar */
+  CupertinoButton _playBtn(context) {
     final provider = Provider.of<GameProvider>(context);
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -115,7 +118,8 @@ class GamePanel extends StatelessWidget {
         child: Text('Iniciar'));
   }
 
-  _playRandomBtn(BuildContext context) {
+  /* Boton de jugar aleatorio */
+  CupertinoButton _playRandomBtn(BuildContext context) {
     final provider = Provider.of<GameProvider>(context);
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -125,7 +129,8 @@ class GamePanel extends StatelessWidget {
         child: Text('Random'));
   }
 
-  _reloadBtn(BuildContext context) {
+  /* Boton de reiniciar */
+  CupertinoButton _resetBtn(BuildContext context) {
     final provider = Provider.of<GameProvider>(context);
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -134,7 +139,8 @@ class GamePanel extends StatelessWidget {
         child: Text('Reiniciar'));
   }
 
-  _logList(BuildContext context) {
+  /* Lista de logs que muestra el juego */
+  ListView _logList(BuildContext context) {
     final provider = Provider.of<GameProvider>(context);
     return ListView.builder(
       //reverse: true,

@@ -7,6 +7,14 @@ class GameProvider extends ChangeNotifier{
   bool _reload = false;
   List<String> _logs = [];
 
+  void resetGame(){
+    _firstPlayer = false;
+    _isPlaying = false;
+    _reload = false;
+    _logs = [];
+    notifyListeners();
+  }
+
   int get kValue => _kValue;
 
   set kValue(int value) {

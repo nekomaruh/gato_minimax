@@ -22,7 +22,8 @@ class Home extends StatelessWidget {
             : _showPortrait(context));
   }
 
-  _showLandscape(BuildContext context) {
+  /* Vista en horizontal */
+  Widget _showLandscape(BuildContext context) {
     return Row(
       children: [
         Container(
@@ -37,7 +38,8 @@ class Home extends StatelessWidget {
     );
   }
 
-  _showPortrait(BuildContext context) {
+  /* Vista en vertical */
+  Widget _showPortrait(BuildContext context) {
     return ListView(
       children: [GameView(), Container(height: 800, child: GamePanel())],
     );
