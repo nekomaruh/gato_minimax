@@ -1,1 +1,5 @@
-enum Mark{X, O, BLANK}
+enum Mark{
+  X,
+  O,
+  BLANK
+}
