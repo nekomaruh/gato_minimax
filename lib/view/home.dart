@@ -5,6 +5,9 @@ import 'game_panel.dart';
 import 'game_board.dart';
 
 class Home extends StatelessWidget {
+
+  /// AQUI PODEMOS AGREGAR A CLASE DE PRUEBA
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

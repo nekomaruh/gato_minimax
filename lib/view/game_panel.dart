@@ -83,7 +83,7 @@ class GamePanel extends StatelessWidget {
   }
 
   selectK(BuildContext context) {
-    List<int> d = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+    List<int> d = [1, 2, 3];
     final panelProvider = Provider.of<GameProvider>(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
