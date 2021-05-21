@@ -4,6 +4,13 @@ import 'package:provider/provider.dart';
 
 class GameView extends StatelessWidget {
 
+  /* Ficha vacía */
+  final Icon emptyIcon = Icon(
+    Icons.pets_rounded,
+    size: 60,
+    color: Colors.blueGrey[50],
+  );
+
   /* Ficha del jugador */
   final Icon playerIcon = Icon(
     Icons.close,
@@ -46,7 +53,7 @@ class GameView extends StatelessWidget {
     int y = (index % provider.matrix.length);
     return Card(
         elevation: 0,
-        color: _setMarkColor(provider, x, y),
+        color: setMarkColor(provider, x, y),
         child: Center(child: _setMarkIcon(provider, x, y)));
   }
 
@@ -60,9 +67,9 @@ class GameView extends StatelessWidget {
   }
 
   /* Construye el color de fondo del tablero */
-  Color _setMarkColor(GameProvider provider, int x, int y) {
+  static Color setMarkColor(GameProvider provider, int x, int y) {
     return provider.matrix[x][y] == 0
-        ? Colors.blueGrey[200]
+        ? Colors.blueGrey[100]
         : provider.matrix[x][y] == 1
             ? Colors.blue[200]
             : Colors.red[200];

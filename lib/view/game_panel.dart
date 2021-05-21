@@ -33,10 +33,7 @@ class GamePanel extends StatelessWidget {
             alignment: WrapAlignment.end,
             spacing: 10,
             runSpacing: 10,
-            children: [
-              _playBtn(provider),
-              _resetBtn(provider)
-            ],
+            children: [_playBtn(provider), _resetBtn(provider)],
           ),
           SizedBox(
             height: 20,
@@ -64,7 +61,7 @@ class GamePanel extends StatelessWidget {
         'Empezar primero',
       ),
       value: provider.firstPlayer,
-      onChanged: (v)=> provider.firstPlayer = v,
+      onChanged: provider.isPlaying ? null : (v) => provider.firstPlayer = v,
     );
   }
 
@@ -73,38 +70,38 @@ class GamePanel extends StatelessWidget {
     return CheckboxListTile(
         value: provider.autoPlay,
         title: Text('Jugar automáticamente'),
-        onChanged: (v) => provider.autoPlay = v);
+        onChanged: provider.isPlaying ? null : (v) => provider.autoPlay = v);
   }
 
   /* Tamaño de tablero */
   ListTile _boardSize(GameProvider provider) {
     List<int> d = [2, 3, 4, 5];
     return ListTile(
-        //contentPadding: EdgeInsets.zero,
+        enabled: !provider.isPlaying,
         title: Row(
           children: [
             Expanded(child: Text('Tamaño del tablero')),
             DropdownButton<int>(
-              underline: Container(),
-              value: provider.boardSize,
-              items: d
-                  .map((int value) => DropdownMenuItem<int>(
-                value: value,
-                child: Text('$value x $value'),
-              ))
-                  .toList(),
-              onChanged: (v) {
-                provider.changeMatrixSize(v);
-              }
-            ),
+                underline: Container(),
+                value: provider.boardSize,
+                items: d
+                    .map((int value) => DropdownMenuItem<int>(
+                          value: value,
+                          child: Text('$value x $value'),
+                        ))
+                    .toList(),
+                onChanged: provider.isPlaying
+                    ? null
+                    : (v) => provider.changeMatrixSize(v)),
           ],
         ));
   }
 
   /* Seleccionar K */
-  ListTile _selectK(GameProvider provider){
+  ListTile _selectK(GameProvider provider) {
     List<int> d = [1, 2, 3];
     return ListTile(
+      enabled: !provider.isPlaying,
       title: Row(
         children: [
           Expanded(child: Text('Valor de K')),
@@ -113,11 +110,11 @@ class GamePanel extends StatelessWidget {
             underline: SizedBox(),
             items: d
                 .map((int value) => DropdownMenuItem<int>(
-              value: value,
-              child: Text(value.toString()),
-            ))
+                      value: value,
+                      child: Text(value.toString()),
+                    ))
                 .toList(),
-            onChanged: (v) => provider.kValue = v,
+            onChanged: provider.isPlaying ? null : (v) => provider.kValue = v,
           ),
         ],
       ),
@@ -153,9 +150,10 @@ class GamePanel extends StatelessWidget {
     );
   }
 
-  ListTile _gameMode(GameProvider provider){
+  ListTile _gameMode(GameProvider provider) {
     List<String> mode = ['Normal', 'Alpha-Beta'];
     return ListTile(
+      enabled: !provider.isPlaying,
       title: Row(
         children: [
           Expanded(child: Text('Modo de Juego')),
@@ -164,11 +162,11 @@ class GamePanel extends StatelessWidget {
             underline: SizedBox(),
             items: mode
                 .map((String value) => DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            ))
+                      value: value,
+                      child: Text(value),
+                    ))
                 .toList(),
-            onChanged: (v) => provider.gameMode = v,
+            onChanged: provider.isPlaying ? null : (v) => provider.gameMode = v,
           ),
         ],
       ),

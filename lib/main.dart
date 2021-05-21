@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         title: 'Algoritmo Minimax',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
+          primarySwatch: Colors.green,
         ),
         home: Home()
       ),

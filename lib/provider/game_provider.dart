@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 
 
@@ -21,12 +23,14 @@ class GameProvider extends ChangeNotifier{
     _isPlaying = false;
     _reload = false;
     _logs = [];
+    matrix = List.generate(_boardSize, (_) => List.filled(_boardSize,0));
     notifyListeners();
   }
 
   void changeMatrixSize(int size){
     _boardSize = size;
-    matrix = List.generate(size, (_) => List.filled(size, 1));
+    var r = new Random();
+    matrix = List.generate(size, (_) => List.filled(size,r.nextInt(3)));
     notifyListeners();
   }
 
