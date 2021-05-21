@@ -1,40 +1,77 @@
+import 'package:algoritmo_minimax/provider/game_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GameView extends StatelessWidget {
+
+  /* Ficha vacía */
+  final Icon emptyIcon = Icon(
+    Icons.pets_rounded,
+    size: 60,
+    color: Colors.blueGrey[50],
+  );
+
+  /* Ficha del jugador */
+  final Icon playerIcon = Icon(
+    Icons.close,
+    size: 60,
+    color: Colors.blue,
+  );
+
+  /* Ficha del enemigo */
+  final Icon aiIcon = Icon(
+    Icons.circle,
+    size: 50,
+    color: Colors.red,
+  );
+
+  /* Construye la vista completa */
   @override
   Widget build(BuildContext context) {
-    List<int> matrix = [0, 0, 0, 1, 0, 2, 2, 0, 0];
+    final GameProvider provider = Provider.of<GameProvider>(context);
+    return _buildBoard(provider);
+  }
+
+  /* Construye el tablero */
+  GridView _buildBoard(GameProvider provider){
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: provider.matrix.length,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10
         ),
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.all(15),
-        itemCount: matrix.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-              elevation: 0,
-              color: matrix[index] == 0
-                  ? Colors.blueGrey[200]
-                  : matrix[index] == 1
-                  ? Colors.blue[200]
-                  : Colors.red[200],
-              // ignore: unrelated_type_equality_checks
-              child: Center(
-                  child: matrix[index] == 0
-                      ? Container()
-                      : matrix[index] == 1
-                      ? Icon(
-                    Icons.close,
-                    size: 60,
-                    color: Colors.blue,
-                  )
-                      : Icon(
-                    Icons.circle,
-                    size: 50,
-                    color: Colors.red,
-                  )));
-        });
+        itemCount: provider.matrix.length * provider.matrix.length,
+        itemBuilder: (_,index) => _buildMark(provider, index));
+  }
+
+  /* Construye los casilleros del tablero */
+  Widget _buildMark(GameProvider provider, int index) {
+    int x = (index / provider.matrix.length).floor();
+    int y = (index % provider.matrix.length);
+    return Card(
+        elevation: 0,
+        color: setMarkColor(provider, x, y),
+        child: Center(child: _setMarkIcon(provider, x, y)));
+  }
+
+  /* Construye los iconos del tablero */
+  Widget _setMarkIcon(GameProvider provider, int x, int y) {
+    return provider.matrix[x][y] == 0
+        ? Container()
+        : provider.matrix[x][y] == 1
+            ? playerIcon
+            : aiIcon;
+  }
+
+  /* Construye el color de fondo del tablero */
+  static Color setMarkColor(GameProvider provider, int x, int y) {
+    return provider.matrix[x][y] == 0
+        ? Colors.blueGrey[100]
+        : provider.matrix[x][y] == 1
+            ? Colors.blue[200]
+            : Colors.red[200];
   }
 }

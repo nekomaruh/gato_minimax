@@ -14,7 +14,9 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text('Gato - Algoritmo Minimax'),
           actions: [
-            IconButton(icon: Icon(CupertinoIcons.info), onPressed: () {})
+            Tooltip(
+                message: '¿Como Jugar?',
+                child: IconButton(icon: Icon(CupertinoIcons.info), onPressed: () {}))
           ],
         ),
         body: MediaQuery.of(context).size.aspectRatio > 1.36
@@ -22,7 +24,8 @@ class Home extends StatelessWidget {
             : _showPortrait(context));
   }
 
-  _showLandscape(BuildContext context) {
+  /* Vista en horizontal */
+  Widget _showLandscape(BuildContext context) {
     return Row(
       children: [
         Container(
@@ -31,13 +34,15 @@ class Home extends StatelessWidget {
             width: MediaQuery.of(context).size.height - kToolbarHeight,
             child: Center(child: GameView())),
         Expanded(
-          child: GamePanel(),
+          child: Container(
+              child: GamePanel()),
         )
       ],
     );
   }
 
-  _showPortrait(BuildContext context) {
+  /* Vista en vertical */
+  Widget _showPortrait(BuildContext context) {
     return ListView(
       children: [GameView(), Container(height: 800, child: GamePanel())],
     );

@@ -11,49 +11,42 @@ class GamePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<GameProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
-          Text(
-            'Configurar Juego',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Wrap(
-            spacing: 10,
-            //runSpacing: 15,
-            children: [
-              selectPlayer(context),
-              selectK(context),
-            ],
-          ),
+          _startFirst(provider),
+          Divider(),
+          _autoPlay(provider),
+          Divider(),
+          _boardSize(provider),
+          Divider(),
+          _selectK(provider),
+          Divider(),
+          _gameMode(provider),
+          Divider(),
           SizedBox(
             height: 10,
           ),
           Wrap(
-            alignment: WrapAlignment.start,
+            alignment: WrapAlignment.end,
             spacing: 10,
             runSpacing: 10,
-            children: [
-              _playBtn(context),
-              _playRandomBtn(context),
-              _reloadBtn(context)
-            ],
+            children: [_playBtn(provider), _resetBtn(provider)],
           ),
           SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Container(
-                color: Colors.grey[200],
-                child: Scrollbar(child: _logList(context)),
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Stack(
+              children: [
+                Container(
+                  color: Colors.grey[200],
+                ),
+                Scrollbar(child: _logList(provider)),
+              ],
             ),
           ),
         ],
@@ -61,89 +54,122 @@ class GamePanel extends StatelessWidget {
     );
   }
 
-  selectPlayer(BuildContext context) {
-    final provider = Provider.of<GameProvider>(context);
-    return Container(
-      height: 50,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+  /* Empezar primero */
+  Widget _startFirst(GameProvider provider) {
+    return CheckboxListTile(
+      title: Text(
+        'Empezar primero',
+      ),
+      value: provider.firstPlayer,
+      onChanged: provider.isPlaying ? null : (v) => provider.firstPlayer = v,
+    );
+  }
+
+  /* Jugar automaticamente */
+  CheckboxListTile _autoPlay(GameProvider provider) {
+    return CheckboxListTile(
+        value: provider.autoPlay,
+        title: Text('Jugar automáticamente'),
+        onChanged: provider.isPlaying ? null : (v) => provider.autoPlay = v);
+  }
+
+  /* Tamaño de tablero */
+  ListTile _boardSize(GameProvider provider) {
+    List<int> d = [2, 3, 4, 5];
+    return ListTile(
+        enabled: !provider.isPlaying,
+        title: Row(
+          children: [
+            Expanded(child: Text('Tamaño del tablero')),
+            DropdownButton<int>(
+                underline: Container(),
+                value: provider.boardSize,
+                items: d
+                    .map((int value) => DropdownMenuItem<int>(
+                          value: value,
+                          child: Text('$value x $value'),
+                        ))
+                    .toList(),
+                onChanged: provider.isPlaying
+                    ? null
+                    : (v) => provider.changeMatrixSize(v)),
+          ],
+        ));
+  }
+
+  /* Seleccionar K */
+  ListTile _selectK(GameProvider provider) {
+    List<int> d = [1, 2, 3];
+    return ListTile(
+      enabled: !provider.isPlaying,
+      title: Row(
         children: [
-          Text(
-            'Empezar primero:',
+          Expanded(child: Text('Valor de K')),
+          DropdownButton<int>(
+            value: provider.kValue,
+            underline: SizedBox(),
+            items: d
+                .map((int value) => DropdownMenuItem<int>(
+                      value: value,
+                      child: Text(value.toString()),
+                    ))
+                .toList(),
+            onChanged: provider.isPlaying ? null : (v) => provider.kValue = v,
           ),
-          SizedBox(
-            width: 10,
-          ),
-          Checkbox(
-              value: provider.firstPlayer,
-              onChanged: (v) => provider.firstPlayer = v)
         ],
       ),
     );
   }
 
-  selectK(BuildContext context) {
-    List<int> d = [1, 2, 3];
-    final panelProvider = Provider.of<GameProvider>(context);
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text('Valor de K:'),
-        SizedBox(
-          width: 10,
-        ),
-        DropdownButton<int>(
-          value: panelProvider.kValue,
-          items: d
-              .map((int value) => DropdownMenuItem<int>(
-                    value: value,
-                    child: new Text(value.toString()),
-                  ))
-              .toList(),
-          onChanged: (v) => panelProvider.kValue = v,
-        ),
-      ],
-    );
-  }
-
-  _playBtn(context) {
-    final provider = Provider.of<GameProvider>(context);
+  /* Boton de jugar */
+  CupertinoButton _playBtn(GameProvider provider) {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
-            provider.isPlaying == false ? () => game.play(context) : null,
+            provider.isPlaying == false ? () => game.play(provider) : null,
         child: Text('Iniciar'));
   }
 
-  _playRandomBtn(BuildContext context) {
-    final provider = Provider.of<GameProvider>(context);
-    return CupertinoButton.filled(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        onPressed: provider.isPlaying == false
-            ? () => game.play(context, randomPlay: true)
-            : null,
-        child: Text('Random'));
-  }
-
-  _reloadBtn(BuildContext context) {
-    final provider = Provider.of<GameProvider>(context);
+  /* Boton de reiniciar */
+  CupertinoButton _resetBtn(GameProvider provider) {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
-            provider.isPlaying == true ? () => game.reload(context) : null,
+            provider.isPlaying == true ? () => game.reset(provider) : null,
         child: Text('Reiniciar'));
   }
 
-  _logList(BuildContext context) {
-    final provider = Provider.of<GameProvider>(context);
+  /* Lista de logs que muestra el juego */
+  ListView _logList(GameProvider provider) {
     return ListView.builder(
-      //reverse: true,
       physics: ClampingScrollPhysics(),
+      shrinkWrap: true,
       padding: EdgeInsets.all(10),
       itemCount: provider.logs.length,
-      itemBuilder: (context,i){
-        return Text('${provider.logs[i]}');
-      },
+      itemBuilder: (context, i) => Text('${provider.logs[i]}'),
+    );
+  }
+
+  ListTile _gameMode(GameProvider provider) {
+    List<String> mode = ['Normal', 'Alpha-Beta'];
+    return ListTile(
+      enabled: !provider.isPlaying,
+      title: Row(
+        children: [
+          Expanded(child: Text('Modo de Juego')),
+          DropdownButton<String>(
+            value: provider.gameMode,
+            underline: SizedBox(),
+            items: mode
+                .map((String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ))
+                .toList(),
+            onChanged: provider.isPlaying ? null : (v) => provider.gameMode = v,
+          ),
+        ],
+      ),
     );
   }
 }

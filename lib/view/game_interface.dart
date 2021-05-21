@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:algoritmo_minimax/provider/game_provider.dart';
 
 abstract class GameInterface {
-  play(BuildContext context, {bool randomPlay = false});
-  reload(BuildContext context);
+  void play(GameProvider provider);
+  void reset(GameProvider provider);
 }
