@@ -14,7 +14,9 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text('Gato - Algoritmo Minimax'),
           actions: [
-            IconButton(icon: Icon(CupertinoIcons.info), onPressed: () {})
+            Tooltip(
+                message: '¿Como Jugar?',
+                child: IconButton(icon: Icon(CupertinoIcons.info), onPressed: () {}))
           ],
         ),
         body: MediaQuery.of(context).size.aspectRatio > 1.36
@@ -32,7 +34,8 @@ class Home extends StatelessWidget {
             width: MediaQuery.of(context).size.height - kToolbarHeight,
             child: Center(child: GameView())),
         Expanded(
-          child: GamePanel(),
+          child: Container(
+              child: GamePanel()),
         )
       ],
     );
