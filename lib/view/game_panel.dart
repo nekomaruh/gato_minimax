@@ -99,7 +99,7 @@ class GamePanel extends StatelessWidget {
           items: d
               .map((int value) => DropdownMenuItem<int>(
                     value: value,
-                    child: new Text(value.toString()),
+                    child: Text(value.toString()),
                   ))
               .toList(),
           onChanged: (v) => panelProvider.kValue = v,
@@ -143,13 +143,10 @@ class GamePanel extends StatelessWidget {
   ListView _logList(BuildContext context) {
     final provider = Provider.of<GameProvider>(context);
     return ListView.builder(
-      //reverse: true,
       physics: ClampingScrollPhysics(),
       padding: EdgeInsets.all(10),
       itemCount: provider.logs.length,
-      itemBuilder: (context,i){
-        return Text('${provider.logs[i]}');
-      },
+      itemBuilder: (context, i) => Text('${provider.logs[i]}'),
     );
   }
 }

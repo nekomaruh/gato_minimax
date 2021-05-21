@@ -8,7 +8,6 @@ class GameProvider extends ChangeNotifier{
   List<String> _logs = [];
 
   void resetGame(){
-    _firstPlayer = false;
     _isPlaying = false;
     _reload = false;
     _logs = [];
