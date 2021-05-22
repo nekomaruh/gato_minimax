@@ -1,3 +1,4 @@
+import 'package:algoritmo_minimax/model/board.dart';
 import 'package:algoritmo_minimax/provider/game_provider.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,7 +84,7 @@ class GameConfig extends StatelessWidget {
             Expanded(child: Text('Tamaño del tablero')),
             DropdownButton<int>(
                 underline: Container(),
-                value: provider.boardSize,
+                value: Board.BOARD_WITH,
                 items: d
                     .map((int value) => DropdownMenuItem<int>(
                           value: value,
@@ -126,10 +127,7 @@ class GameConfig extends StatelessWidget {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
-            provider.isPlaying == false ? () {
-              provider.isPlaying = true;
-              game.play(provider);
-            } : null,
+            provider.isPlaying == false ? () => game.playAi(provider) : null,
         child: Text('Iniciar'));
   }
 
@@ -138,10 +136,7 @@ class GameConfig extends StatelessWidget {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
-            provider.isPlaying == true ? () {
-              game.reset(provider);
-              provider.resetGameUI();
-            } : null,
+            provider.isPlaying == true ? () => game.reset(provider) : null,
         child: Text('Reiniciar'));
   }
 

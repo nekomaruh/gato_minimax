@@ -2,10 +2,8 @@ import 'package:algoritmo_minimax/model/board.dart';
 import 'package:algoritmo_minimax/model/mark.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class GameProvider extends ChangeNotifier{
   int _kValue = 2;
-  int _boardSize = 3;
   String _gameMode = 'Normal';
   bool _firstPlayer = false;
   bool _isPlaying = false;
@@ -16,12 +14,12 @@ class GameProvider extends ChangeNotifier{
   void resetGameUI(){
     _isPlaying = false;
     _logs = [];
-    //board.board = List.generate(_boardSize, (_) => List.filled(_boardSize,Mark.BLANK));
+    board.board = List.generate(Board.BOARD_WITH, (_) => List.filled(Board.BOARD_WITH,Mark.BLANK));
     notifyListeners();
   }
 
   void changeMatrixSize(int size){
-    _boardSize = size;
+    Board.BOARD_WITH = size;
     board.board = List.generate(size, (_) => List.filled(size,Mark.BLANK));
     notifyListeners();
   }
@@ -58,13 +56,6 @@ class GameProvider extends ChangeNotifier{
 
   set gameMode(String value) {
     _gameMode = value;
-    notifyListeners();
-  }
-
-  int get boardSize => _boardSize;
-
-  set boardSize(int value) {
-    _boardSize = value;
     notifyListeners();
   }
 
