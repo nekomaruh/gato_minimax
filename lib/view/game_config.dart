@@ -1,6 +1,5 @@
 import 'package:algoritmo_minimax/provider/game_provider.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
-import 'package:algoritmo_minimax/interface/game_interface_i.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -127,7 +126,10 @@ class GameConfig extends StatelessWidget {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
-            provider.isPlaying == false ? () => game.play(provider) : null,
+            provider.isPlaying == false ? () {
+              provider.isPlaying = true;
+              game.play(provider);
+            } : null,
         child: Text('Iniciar'));
   }
 
@@ -136,7 +138,10 @@ class GameConfig extends StatelessWidget {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
-            provider.isPlaying == true ? () => game.reset(provider) : null,
+            provider.isPlaying == true ? () {
+              game.reset(provider);
+              provider.resetGameUI();
+            } : null,
         child: Text('Reiniciar'));
   }
 

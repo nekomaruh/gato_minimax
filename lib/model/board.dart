@@ -1,7 +1,7 @@
 import 'mark.dart';
 
 class Board {
-  static const BOARD_WITH = 3;
+  static int BOARD_WITH = 3;
   List<List<Mark>> board;
   Mark winningMark;
   bool tie;
@@ -9,7 +9,6 @@ class Board {
   int availableMoves = BOARD_WITH*BOARD_WITH;
 
   Board() {
-    board = new List.empty(); // Matriz vacia
     crossTurn = true;
     tie = false;
     gameOver = false;
@@ -18,11 +17,7 @@ class Board {
   }
 
   void initialisedBoard() {
-    for(int row = 0; row < BOARD_WITH; row++) {
-      for( int col = 0; col < BOARD_WITH; col++){
-        board[row][col]= Mark.BLANK;
-      }
-    }
+    board = List.generate(BOARD_WITH, (_) => List.filled(BOARD_WITH,Mark.BLANK));
   }
 
   /* El jugador marca un espacio dada las cordenadas de

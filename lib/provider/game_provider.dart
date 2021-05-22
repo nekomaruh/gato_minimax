@@ -1,5 +1,5 @@
-import 'dart:math';
-
+import 'package:algoritmo_minimax/model/board.dart';
+import 'package:algoritmo_minimax/model/mark.dart';
 import 'package:flutter/cupertino.dart';
 
 
@@ -11,24 +11,18 @@ class GameProvider extends ChangeNotifier{
   bool _isPlaying = false;
   bool _autoPlay = false;
   List<String> _logs = [];
+  Board board = new Board();
 
-  List<List<int>> matrix = [
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0],
-  ];
-
-  void resetGame(){
+  void resetGameUI(){
     _isPlaying = false;
     _logs = [];
-    matrix = List.generate(_boardSize, (_) => List.filled(_boardSize,0));
+    //board.board = List.generate(_boardSize, (_) => List.filled(_boardSize,Mark.BLANK));
     notifyListeners();
   }
 
   void changeMatrixSize(int size){
     _boardSize = size;
-    var r = new Random();
-    matrix = List.generate(size, (_) => List.filled(size,r.nextInt(3)));
+    board.board = List.generate(size, (_) => List.filled(size,Mark.BLANK));
     notifyListeners();
   }
 
