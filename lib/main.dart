@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:algoritmo_minimax/provider/game_provider.dart';
-import 'package:algoritmo_minimax/view/home.dart';
+import 'package:algoritmo_minimax/view/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: Home()
+        home: Game()
       ),
     );
   }

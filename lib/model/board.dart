@@ -1,7 +1,6 @@
 import 'mark.dart';
 
 class Board {
-
   static const BOARD_WITH = 3;
   List<List<Mark>> board;
   Mark winningMark;

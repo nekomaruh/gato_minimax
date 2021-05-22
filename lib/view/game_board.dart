@@ -1,15 +1,11 @@
+import 'package:algoritmo_minimax/interface/game_interface.dart';
 import 'package:algoritmo_minimax/provider/game_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GameView extends StatelessWidget {
-
-  /* Ficha vacía */
-  final Icon emptyIcon = Icon(
-    Icons.pets_rounded,
-    size: 60,
-    color: Colors.blueGrey[50],
-  );
+class GameBoard extends StatelessWidget {
+  final GameInterface game;
+  GameBoard(this.game);
 
   /* Ficha del jugador */
   final Icon playerIcon = Icon(

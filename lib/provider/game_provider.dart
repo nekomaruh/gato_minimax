@@ -10,7 +10,6 @@ class GameProvider extends ChangeNotifier{
   bool _firstPlayer = false;
   bool _isPlaying = false;
   bool _autoPlay = false;
-  bool _reload = false;
   List<String> _logs = [];
 
   List<List<int>> matrix = [
@@ -21,7 +20,6 @@ class GameProvider extends ChangeNotifier{
 
   void resetGame(){
     _isPlaying = false;
-    _reload = false;
     _logs = [];
     matrix = List.generate(_boardSize, (_) => List.filled(_boardSize,0));
     notifyListeners();
@@ -45,13 +43,6 @@ class GameProvider extends ChangeNotifier{
 
   set firstPlayer(bool value) {
     _firstPlayer = value;
-    notifyListeners();
-  }
-
-  bool get reload => _reload;
-
-  set reload(bool value) {
-    _reload = value;
     notifyListeners();
   }
 

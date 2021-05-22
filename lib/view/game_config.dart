@@ -1,13 +1,14 @@
 import 'package:algoritmo_minimax/provider/game_provider.dart';
-import 'package:algoritmo_minimax/view/game_interface.dart';
-import 'package:algoritmo_minimax/view/game_interface_i.dart';
+import 'package:algoritmo_minimax/interface/game_interface.dart';
+import 'package:algoritmo_minimax/interface/game_interface_i.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'game_interface.dart';
+import '../interface/game_interface.dart';
 
-class GamePanel extends StatelessWidget {
-  final GameInterface game = GameInterfaceImpl();
+class GameConfig extends StatelessWidget {
+  final GameInterface game;
+  GameConfig(this.game);
 
   @override
   Widget build(BuildContext context) {
