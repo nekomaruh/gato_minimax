@@ -1,6 +1,7 @@
 import 'package:algoritmo_minimax/interface/game_interface.dart';
-import 'package:algoritmo_minimax/model/mark.dart';
 import 'package:algoritmo_minimax/provider/game_provider.dart';
+import 'package:algoritmo_minimax/test/globals.dart';
+import 'package:algoritmo_minimax/test/minimax.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,41 +34,52 @@ class GameBoard extends StatelessWidget {
   GridView _buildBoard(GameProvider provider){
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: provider.board.board.length,
+          crossAxisCount: Globals.board.length,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10
         ),
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.all(15),
-        itemCount: provider.board.board.length * provider.board.board.length,
+        itemCount: Globals.board.length * Globals.board.length,
         itemBuilder: (_,index) => _buildMark(provider, index));
   }
 
   /* Construye los casilleros del tablero */
   Widget _buildMark(GameProvider provider, int index) {
-    int x = (index / provider.board.board.length).floor();
-    int y = (index % provider.board.board.length);
-    return Card(
-        elevation: 0,
-        color: setMarkColor(provider, x, y),
-        child: Center(child: _setMarkIcon(provider, x, y)));
+    int x = (index / Globals.board.length).floor();
+    int y = (index % Globals.board.length);
+    return GestureDetector(
+      onTap: (){
+        if (Globals.currentPlayer == Globals.human) {
+          if (Globals.board[x][y] == '') {
+            Globals.board[x][y] = Globals.human;
+            Globals.currentPlayer = Globals.ai;
+            bestMove();
+          }
+        }
+      },
+      child: Card(
+          elevation: 0,
+          color: setMarkColor(provider, x, y),
+          child: Center(child: _setMarkIcon(provider, x, y))),
+    );
   }
 
   /* Construye los iconos del tablero */
   Widget _setMarkIcon(GameProvider provider, int x, int y) {
-    return provider.board.board[x][y] == Mark.BLANK
+    return Globals.board[x][y] == ''
         ? Container()
-        : provider.board.board[x][y] == Mark.X
+        : Globals.board[x][y] == 'X'
             ? playerIcon
             : aiIcon;
   }
 
   /* Construye el color de fondo del tablero */
   Color setMarkColor(GameProvider provider, int x, int y) {
-    return provider.board.board[x][y] == Mark.BLANK
+    return Globals.board[x][y] == ''
         ? Colors.blueGrey[100]
-        : provider.board.board[x][y] == Mark.X
+        : Globals.board[x][y] == 'X'
             ? Colors.blue[200]
             : Colors.red[200];
   }

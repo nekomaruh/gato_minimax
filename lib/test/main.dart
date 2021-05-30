@@ -1,6 +1,3 @@
-import 'board.dart';
+main(){
 
-void main() {
-  Board board = new Board();
-  print(board.showBoard());
 }
