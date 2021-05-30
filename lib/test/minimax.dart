@@ -65,7 +65,7 @@ class MiniMax {
    * @param board Board to evaluate
    * @return Coordinates of best move
    */
-  static List<int> getBestMove(Board board) {
+  List<int> getBestMove(Board board) {
     List<int> bestMove = [-1, -1];
     int bestValue = MIN_VALUE;
 
