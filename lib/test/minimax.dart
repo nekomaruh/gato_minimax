@@ -16,12 +16,14 @@ bestMove() {
         Globals.board[i][j] = '';
         if (score > bestScore) {
           bestScore = score;
-          move = { i, j };
+          move = [ i, j ];
+          print(move);
         }
       }
     }
   }
-  Globals.board[move.i][move.j] = Globals.ai;
+  print(Globals.board);
+  Globals.board[move[0]][move[1]] = Globals.ai;
   Globals.currentPlayer = Globals.human;
 }
 

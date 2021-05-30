@@ -49,6 +49,7 @@ class GameInterfaceImpl implements GameInterface{
      */
 
 
+    /*
     final sketch = Sketch();
     var winner = sketch.checkWinner();
 
@@ -56,7 +57,7 @@ class GameInterfaceImpl implements GameInterface{
 
       // Chequear movimientos disponibles
 
-      
+
 
       var resultP = createP('');
       resultP.style('font-size', '32pt');
@@ -68,6 +69,8 @@ class GameInterfaceImpl implements GameInterface{
 
 
     }
+
+     */
 
 
 

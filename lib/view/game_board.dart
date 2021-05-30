@@ -2,35 +2,37 @@ import 'package:algoritmo_minimax/interface/game_interface.dart';
 import 'package:algoritmo_minimax/provider/game_provider.dart';
 import 'package:algoritmo_minimax/test/globals.dart';
 import 'package:algoritmo_minimax/test/minimax.dart';
+import 'package:algoritmo_minimax/test/sketch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class GameBoard extends StatelessWidget {
+class GameBoard extends StatefulWidget {
   final GameInterface game;
   GameBoard(this.game);
 
-  /* Ficha del jugador */
+  @override
+  _GameBoardState createState() => _GameBoardState();
+}
+
+class _GameBoardState extends State<GameBoard> {
   final Icon playerIcon = Icon(
     Icons.close,
     size: 60,
     color: Colors.blue,
   );
 
-  /* Ficha del enemigo */
   final Icon aiIcon = Icon(
     Icons.circle,
     size: 50,
     color: Colors.red,
   );
 
-  /* Construye la vista completa */
   @override
   Widget build(BuildContext context) {
     final GameProvider provider = Provider.of<GameProvider>(context);
     return _buildBoard(provider);
   }
 
-  /* Construye el tablero */
   GridView _buildBoard(GameProvider provider){
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -45,7 +47,6 @@ class GameBoard extends StatelessWidget {
         itemBuilder: (_,index) => _buildMark(provider, index));
   }
 
-  /* Construye los casilleros del tablero */
   Widget _buildMark(GameProvider provider, int index) {
     int x = (index / Globals.board.length).floor();
     int y = (index % Globals.board.length);
@@ -58,6 +59,15 @@ class GameBoard extends StatelessWidget {
             bestMove();
           }
         }
+        final sketch = Sketch();
+        var winner = sketch.checkWinner();
+        if(winner!=null){
+          
+          print(winner);
+        }
+        setState(() {
+
+        });
       },
       child: Card(
           elevation: 0,
@@ -66,7 +76,6 @@ class GameBoard extends StatelessWidget {
     );
   }
 
-  /* Construye los iconos del tablero */
   Widget _setMarkIcon(GameProvider provider, int x, int y) {
     return Globals.board[x][y] == ''
         ? Container()
@@ -75,7 +84,6 @@ class GameBoard extends StatelessWidget {
             : aiIcon;
   }
 
-  /* Construye el color de fondo del tablero */
   Color setMarkColor(GameProvider provider, int x, int y) {
     return Globals.board[x][y] == ''
         ? Colors.blueGrey[100]
