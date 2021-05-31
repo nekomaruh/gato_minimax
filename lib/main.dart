@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:algoritmo_minimax/provider/game_provider.dart';
-import 'package:algoritmo_minimax/test/globals.dart';
-import 'package:algoritmo_minimax/view/game.dart';
+import 'package:algoritmo_minimax/provider/game_controller.dart';
+import 'package:algoritmo_minimax/ai/globals.dart';
+import 'package:algoritmo_minimax/view/game/game.dart';
+import 'package:algoritmo_minimax/view/tutorial/tutorial.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => GameProvider()),
+        ChangeNotifierProvider(create: (_) => GameController()),
       ],
       child: MaterialApp(
         title: 'Algoritmo Minimax',
@@ -33,7 +34,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: Game()
+        initialRoute: '/',
+        routes: {
+          '/' : (_) => Game(),
+          '/tutorial' : (_) => Tutorial()
+        },
       ),
     );
   }

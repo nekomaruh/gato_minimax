@@ -1,10 +1,10 @@
-import 'package:algoritmo_minimax/model/board.dart';
-import 'package:algoritmo_minimax/provider/game_provider.dart';
+import 'package:algoritmo_minimax/provider/game_controller.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
+import 'package:algoritmo_minimax/ai/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../interface/game_interface.dart';
+import '../../interface/game_interface.dart';
 
 class GameConfig extends StatelessWidget {
   final GameInterface game;
@@ -12,7 +12,7 @@ class GameConfig extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GameProvider>(context);
+    final provider = Provider.of<GameController>(context);
     return Padding(
       padding: const EdgeInsets.all(15),
       child: ListView(
@@ -56,7 +56,7 @@ class GameConfig extends StatelessWidget {
   }
 
   /* Empezar primero */
-  Widget _startFirst(GameProvider provider) {
+  Widget _startFirst(GameController provider) {
     return CheckboxListTile(
       title: Text(
         'Empezar primero',
@@ -67,7 +67,7 @@ class GameConfig extends StatelessWidget {
   }
 
   /* Jugar automaticamente */
-  CheckboxListTile _autoPlay(GameProvider provider) {
+  CheckboxListTile _autoPlay(GameController provider) {
     return CheckboxListTile(
         value: provider.autoPlay,
         title: Text('Jugar automáticamente'),
@@ -75,7 +75,7 @@ class GameConfig extends StatelessWidget {
   }
 
   /* Tamaño de tablero */
-  ListTile _boardSize(GameProvider provider) {
+  ListTile _boardSize(GameController provider) {
     List<int> d = [2, 3, 4, 5];
     return ListTile(
         enabled: !provider.isPlaying,
@@ -84,7 +84,7 @@ class GameConfig extends StatelessWidget {
             Expanded(child: Text('Tamaño del tablero')),
             DropdownButton<int>(
                 underline: Container(),
-                value: Board.BOARD_WITH,
+                value: Globals.board.length,
                 items: d
                     .map((int value) => DropdownMenuItem<int>(
                           value: value,
@@ -99,8 +99,8 @@ class GameConfig extends StatelessWidget {
   }
 
   /* Seleccionar K */
-  ListTile _selectK(GameProvider provider) {
-    List<int> d = [1, 2, 3];
+  ListTile _selectK(GameController provider) {
+    List<int> d = [0, 1, 2, 3, 4, 5, 6];
     return ListTile(
       enabled: !provider.isPlaying,
       title: Row(
@@ -115,7 +115,7 @@ class GameConfig extends StatelessWidget {
                       child: Text(value.toString()),
                     ))
                 .toList(),
-            onChanged: provider.isPlaying ? null : (v) => provider.kValue = v,
+            onChanged: provider.isPlaying ? null : (v) => provider.setMaxDepth(v),
           ),
         ],
       ),
@@ -123,7 +123,7 @@ class GameConfig extends StatelessWidget {
   }
 
   /* Boton de jugar */
-  CupertinoButton _playBtn(GameProvider provider) {
+  CupertinoButton _playBtn(GameController provider) {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
@@ -132,7 +132,7 @@ class GameConfig extends StatelessWidget {
   }
 
   /* Boton de reiniciar */
-  CupertinoButton _resetBtn(GameProvider provider) {
+  CupertinoButton _resetBtn(GameController provider) {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed:
@@ -141,7 +141,7 @@ class GameConfig extends StatelessWidget {
   }
 
   /* Lista de logs que muestra el juego */
-  ListView _logList(GameProvider provider) {
+  ListView _logList(GameController provider) {
     return ListView.builder(
       physics: ClampingScrollPhysics(),
       shrinkWrap: true,
@@ -151,7 +151,7 @@ class GameConfig extends StatelessWidget {
     );
   }
 
-  ListTile _gameMode(GameProvider provider) {
+  ListTile _gameMode(GameController provider) {
     List<String> mode = ['Normal', 'Alpha-Beta'];
     return ListTile(
       enabled: !provider.isPlaying,

@@ -1,10 +1,11 @@
-import 'package:algoritmo_minimax/provider/game_provider.dart';
+import 'package:algoritmo_minimax/provider/game_controller.dart';
 
 class Globals{
   static List<List<String>> board;
   static String ai;
   static String human;
   static String currentPlayer;
+  static int maxDepth = 0;
 
   static initGlobals(){
     board = List.generate(3, (_) => List.filled(3,''));
@@ -13,7 +14,7 @@ class Globals{
     currentPlayer = Globals.human;
   }
 
-  static initGlobalsWithSize(GameProvider provider){
+  static initGlobalsWithSize(GameController provider){
     ai = 'X';
     human = 'O';
     currentPlayer = Globals.human;

@@ -7,7 +7,6 @@ import 'game_config.dart';
 import 'game_board.dart';
 
 class Game extends StatelessWidget {
-
   /// AQUI PODEMOS AGREGAR A CLASE DE PRUEBA
   final GameInterface game = new GameInterfaceImpl();
 
@@ -21,7 +20,8 @@ class Game extends StatelessWidget {
             Tooltip(
                 message: '¿Como Jugar?',
                 child: IconButton(
-                    icon: Icon(CupertinoIcons.info), onPressed: () {}))
+                    icon: Icon(CupertinoIcons.info),
+                    onPressed: () => Navigator.pushNamed(context, '/tutorial')))
           ],
         ),
         body: MediaQuery.of(context).size.aspectRatio > 1.36
