@@ -39,7 +39,7 @@ class _GameConfigState extends State<GameConfig> {
             alignment: WrapAlignment.end,
             spacing: 10,
             runSpacing: 10,
-            children: [_playBtn(provider), _resetBtn(provider)],
+            children: [_thinking(provider), _playBtn(provider), _resetBtn(provider)],
           ),
           SizedBox(
             height: 20,
@@ -99,12 +99,12 @@ class _GameConfigState extends State<GameConfig> {
   }
 
   ListTile _selectK(GameController provider) {
-    List<int> d = [0, 1, 2, 3, 4, 5, 6];
+    List<int> d = [2, 3, 4, 5, 6];
     return ListTile(
       enabled: !provider.isPlaying,
       title: Row(
         children: [
-          Expanded(child: Text('Valor de K')),
+          Expanded(child: Text('Valor de K (dificultad)')),
           DropdownButton<int>(
             value: Globals.maxDepth,
             underline: SizedBox(),
@@ -126,7 +126,10 @@ class _GameConfigState extends State<GameConfig> {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
         onPressed: provider.isPlaying == false
-            ? () => widget.game.playAi(provider)
+            ? () async {
+                provider.isThinking = true;
+                await widget.game.playAi(provider);
+              }
             : null,
         child: Text('Iniciar'));
   }
@@ -171,5 +174,15 @@ class _GameConfigState extends State<GameConfig> {
         ],
       ),
     );
+  }
+
+  _thinking(GameController provider) {
+    return provider.isThinking
+        ? Image(
+      image: AssetImage('img/thinking.gif'),
+      width: 40,
+      height: 40,
+    )
+        : Container();
   }
 }

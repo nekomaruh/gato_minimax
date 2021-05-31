@@ -1,17 +1,14 @@
 import '../ai/globals.dart';
 
 class Sketch {
-  equals3(a, b, c) {
-    return a == b && b == c && a != '';
-  }
 
+  /* Verifica si se cumple que existe una linea ganadora */
   bool equalsN(Set marks) {
     if(marks.length==1 && !marks.contains('')) return true;
     return false;
   }
 
-
-
+  /* Verifica si existe algún ganador en la partida */
   checkWinner() {
     var winner;
 
@@ -25,7 +22,6 @@ class Sketch {
       }
       if (equalsN(winMarks)) winner = Globals.board[x][0];
     }
-
 
     // Vertical
     for (int x = 0; x < Globals.board.length; x++) {
@@ -58,16 +54,18 @@ class Sketch {
     }
 
     if (winner == null && openSpots == 0) {
-      return 'tie';
+      return 'empate';
     } else {
       return winner;
     }
 
   }
 
-
-
-
+/*
+  equals3(a, b, c) {
+    return a == b && b == c && a != '';
+  }
+*/
 
 /*
   checkWinner() {
@@ -116,10 +114,5 @@ class Sketch {
   }
 
  */
-
-
-
-
-
 
 }

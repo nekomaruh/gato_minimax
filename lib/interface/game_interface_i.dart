@@ -1,22 +1,39 @@
 
+import 'dart:async';
 import 'dart:math';
 
+import 'package:algoritmo_minimax/ai/minimax_alpha_beta.dart';
 import 'package:algoritmo_minimax/ai/sketch.dart';
 import 'package:algoritmo_minimax/provider/game_controller.dart';
 import 'package:algoritmo_minimax/ai/globals.dart';
 import 'package:algoritmo_minimax/ai/minimax.dart';
+import 'package:flutter/foundation.dart';
 
 import 'game_interface.dart';
 
 class GameInterfaceImpl implements GameInterface{
   /// La clase GameProvider es el controlador de la vista
 
+  executeMove(GameController provider)  {
+    List<int> move;
+    if(provider.gameMode == 'Normal'){
+      move = bestMove();
+    }else{
+      move = bestMoveAlphaBeta();
+    }
+    print(move);
+    return move;
+  }
+
   /* Comienza el juego */
-  void playAi(GameController provider) {
+  @override
+  playAi(GameController provider) async {
+    Globals.startTime = DateTime.now();
     provider.isPlaying = true;
     if(!provider.startFirst){
-      var log = bestMove();
-      provider.addLog('Juega IA $log');
+      var move = executeMove(provider);
+      provider.isThinking = false;
+      provider.addLog('Juega IA $move');
     }
     if(provider.autoPlay){
       print('autoplay');
@@ -45,7 +62,7 @@ class GameInterfaceImpl implements GameInterface{
           final sketch = Sketch();
           winner = sketch.checkWinner();
           if(winner!=null) break;
-          var move = bestMove();
+          var move = executeMove(provider);
           provider.addLog('Juega IA: $move');
         }
       }
@@ -53,13 +70,17 @@ class GameInterfaceImpl implements GameInterface{
       winner = sketch.checkWinner();
     }
     provider.addLog('Gana $winner');
+    final time = DateTime.now().difference(Globals.startTime);
+    provider.addLog('Tiempo ${(time.inMilliseconds/1000)} segundos');
   }
 
   /* Reinicia el juego */
   void reset(GameController provider) {
     provider.resetGameUI();
-    Globals.initGlobalsWithSize(provider);
+    Globals.reloadVariables(provider);
   }
+
+
 
 }
 

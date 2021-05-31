@@ -1,7 +1,8 @@
 import 'dart:math';
+
 import 'globals.dart';
 
-bestMove() {
+List<int> bestMove() {
   // Juega IA
   int bestScore = -9999999;
   var move;
@@ -29,11 +30,12 @@ bestMove() {
 var scores = {
   'X': 1,
   'O': -1,
-  'tie': 0
+  'empate': 0
 };
 
 /* Algoritmo Minimax */
 minimax(board, depth, isMaximizing) {
+  //Globals.printBoard();
 
   int val = evaluateBoard(depth);
   // Nodo terminal (ganar/perder/empate) o profundidad alcanzada

@@ -6,6 +6,7 @@ class GameController extends ChangeNotifier{
   bool _startFirst = false;
   bool _isPlaying = false;
   bool _autoPlay = false;
+  bool _isThinking = false;
   List<String> _logs = [];
 
   void resetGameUI(){
@@ -60,6 +61,13 @@ class GameController extends ChangeNotifier{
 
   set autoPlay(bool value) {
     _autoPlay = value;
+    notifyListeners();
+  }
+
+  bool get isThinking => _isThinking;
+
+  set isThinking(bool value) {
+    _isThinking = value;
     notifyListeners();
   }
 }

@@ -1,9 +1,11 @@
+import 'package:algoritmo_minimax/ai/minimax_alpha_beta.dart';
 import 'package:algoritmo_minimax/ai/sketch.dart';
 import 'package:algoritmo_minimax/helpers/alert.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
 import 'package:algoritmo_minimax/provider/game_controller.dart';
 import 'package:algoritmo_minimax/ai/globals.dart';
 import 'package:algoritmo_minimax/ai/minimax.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -68,14 +70,19 @@ class _GameBoardState extends State<GameBoard> {
                   showAlert(
                       context,
                       'Partida Terminada',
-                      winner == 'tie'
+                      winner == 'empate'
                           ? 'Empate'
                           : winner == 'X'
                           ? 'Ha ganado IA'
                           : 'Ha ganado humano');
                   return;
                 }
-                var move = bestMove();
+                var move;
+                if(provider.gameMode == 'Normal'){
+                  move = bestMove();
+                }else{
+                  move = bestMoveAlphaBeta();
+                }
                 provider.addLog('Juega IA: $move');
               }
             }
@@ -87,7 +94,7 @@ class _GameBoardState extends State<GameBoard> {
               showAlert(
                   context,
                   'Partida Terminada',
-                  winner == 'tie'
+                  winner == 'empate'
                       ? 'Empate'
                       : winner == 'X'
                           ? 'Ha ganado IA'
