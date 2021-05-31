@@ -101,5 +101,9 @@ class Board {
     return winningMark;
   }
 
+  int getWidth(){
+    return BOARD_WITH;
+  }
+
 }
 

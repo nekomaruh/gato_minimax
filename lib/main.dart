@@ -6,9 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
+import 'model/Console.dart';
 
 void main() {
-  if(!kIsWeb){
+  /*if(!kIsWeb){
     WidgetsFlutterBinding.ensureInitialized();
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       setWindowTitle('Taller Sistemas Inteligentes - Johan Ordenes - Dino Marín');
@@ -16,6 +17,10 @@ void main() {
     }
   }
   runApp(MyApp());
+   */
+  Console console = new Console();
+  console.play();
+
 }
 
 class MyApp extends StatelessWidget {
