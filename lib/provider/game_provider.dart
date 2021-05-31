@@ -14,7 +14,6 @@ class GameProvider extends ChangeNotifier{
   void resetGameUI(){
     _isPlaying = false;
     _logs = [];
-    //board.board = List.generate(Board.BOARD_WITH, (_) => List.filled(Board.BOARD_WITH,Mark.BLANK));
     notifyListeners();
   }
 
@@ -47,8 +46,8 @@ class GameProvider extends ChangeNotifier{
 
   List<String> get logs => _logs;
 
-  set logs(List<String> value) {
-    _logs = value;
+  addLog(String log) {
+    _logs.add(log);
     notifyListeners();
   }
 

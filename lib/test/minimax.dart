@@ -25,6 +25,7 @@ bestMove() {
   print(Globals.board);
   Globals.board[move[0]][move[1]] = Globals.ai;
   Globals.currentPlayer = Globals.human;
+  return move;
 }
 
 var scores = {

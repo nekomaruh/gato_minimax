@@ -52,7 +52,8 @@ class _GameBoardState extends State<GameBoard> {
     int y = (index % Globals.board.length);
     return GestureDetector(
       onTap: () {
-        if(provider.isPlaying){
+        provider.addLog('Juega humano: [$x,$y]');
+        if (provider.isPlaying) {
           final sketch = Sketch();
           var winner = sketch.checkWinner();
           if (winner == null) {
@@ -60,14 +61,23 @@ class _GameBoardState extends State<GameBoard> {
               if (Globals.board[x][y] == '') {
                 Globals.board[x][y] = Globals.human;
                 Globals.currentPlayer = Globals.ai;
-                bestMove();
+                var move = bestMove();
+                provider.addLog('Juega IA: $move');
               }
             }
             setState(() {});
             final sketch = Sketch();
             var winner = sketch.checkWinner();
+            provider.addLog('Ganador: ${winner ?? 'Ninguno'}');
             if (winner != null) {
-              showAlert(context, 'Partida Terminada', 'Ha ganado $winner');
+              showAlert(
+                  context,
+                  'Partida Terminada',
+                  winner == 'tie'
+                      ? 'Empate'
+                      : winner == 'X'
+                          ? 'Ha ganado IA'
+                          : 'Ha ganado humano');
             }
           }
         }
