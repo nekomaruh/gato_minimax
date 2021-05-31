@@ -1,7 +1,4 @@
 import 'dart:math';
-
-import 'package:algoritmo_minimax/ai/sketch.dart';
-
 import 'globals.dart';
 
 bestMove() {

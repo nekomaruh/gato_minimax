@@ -1,4 +1,3 @@
-import 'package:algoritmo_minimax/helpers/alert.dart';
 import 'package:algoritmo_minimax/provider/game_controller.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
 import 'package:algoritmo_minimax/ai/globals.dart';
