@@ -1,3 +1,4 @@
+import 'package:algoritmo_minimax/helpers/alert.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
 import 'package:algoritmo_minimax/provider/game_provider.dart';
 import 'package:algoritmo_minimax/test/globals.dart';
@@ -33,41 +34,43 @@ class _GameBoardState extends State<GameBoard> {
     return _buildBoard(provider);
   }
 
-  GridView _buildBoard(GameProvider provider){
+  GridView _buildBoard(GameProvider provider) {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: Globals.board.length,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10
-        ),
+            crossAxisCount: Globals.board.length,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10),
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.all(15),
         itemCount: Globals.board.length * Globals.board.length,
-        itemBuilder: (_,index) => _buildMark(provider, index));
+        itemBuilder: (_, index) => _buildMark(provider, index));
   }
 
   Widget _buildMark(GameProvider provider, int index) {
     int x = (index / Globals.board.length).floor();
     int y = (index % Globals.board.length);
     return GestureDetector(
-      onTap: (){
-        if (Globals.currentPlayer == Globals.human) {
-          if (Globals.board[x][y] == '') {
-            Globals.board[x][y] = Globals.human;
-            Globals.currentPlayer = Globals.ai;
-            bestMove();
+      onTap: () {
+        if(provider.isPlaying){
+          final sketch = Sketch();
+          var winner = sketch.checkWinner();
+          if (winner == null) {
+            if (Globals.currentPlayer == Globals.human) {
+              if (Globals.board[x][y] == '') {
+                Globals.board[x][y] = Globals.human;
+                Globals.currentPlayer = Globals.ai;
+                bestMove();
+              }
+            }
+            setState(() {});
+            final sketch = Sketch();
+            var winner = sketch.checkWinner();
+            if (winner != null) {
+              showAlert(context, 'Partida Terminada', 'Ha ganado $winner');
+            }
           }
         }
-        final sketch = Sketch();
-        var winner = sketch.checkWinner();
-        if(winner!=null){
-          
-          print(winner);
-        }
-        setState(() {
-
-        });
       },
       child: Card(
           elevation: 0,

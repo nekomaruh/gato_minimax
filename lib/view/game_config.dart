@@ -61,8 +61,8 @@ class GameConfig extends StatelessWidget {
       title: Text(
         'Empezar primero',
       ),
-      value: provider.firstPlayer,
-      onChanged: provider.isPlaying ? null : (v) => provider.firstPlayer = v,
+      value: provider.startFirst,
+      onChanged: provider.isPlaying ? null : (v) => provider.startFirst = v,
     );
   }
 

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 class GameProvider extends ChangeNotifier{
   int _kValue = 2;
   String _gameMode = 'Normal';
-  bool _firstPlayer = false;
+  bool _startFirst = false;
   bool _isPlaying = false;
   bool _autoPlay = false;
   List<String> _logs = [];
@@ -14,7 +14,7 @@ class GameProvider extends ChangeNotifier{
   void resetGameUI(){
     _isPlaying = false;
     _logs = [];
-    board.board = List.generate(Board.BOARD_WITH, (_) => List.filled(Board.BOARD_WITH,Mark.BLANK));
+    //board.board = List.generate(Board.BOARD_WITH, (_) => List.filled(Board.BOARD_WITH,Mark.BLANK));
     notifyListeners();
   }
 
@@ -31,10 +31,10 @@ class GameProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  bool get firstPlayer => _firstPlayer;
+  bool get startFirst => _startFirst;
 
-  set firstPlayer(bool value) {
-    _firstPlayer = value;
+  set startFirst(bool value) {
+    _startFirst = value;
     notifyListeners();
   }
 
