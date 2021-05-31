@@ -147,7 +147,7 @@ class GameConfig extends StatelessWidget {
       shrinkWrap: true,
       padding: EdgeInsets.all(10),
       itemCount: provider.logs.length,
-      itemBuilder: (context, i) => Text('${provider.logs[i]}'),
+      itemBuilder: (context, i) => Text('${i+1}. ${provider.logs[i]}'),
     );
   }
 
