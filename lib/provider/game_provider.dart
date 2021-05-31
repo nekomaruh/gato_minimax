@@ -1,5 +1,6 @@
 import 'package:algoritmo_minimax/model/board.dart';
 import 'package:algoritmo_minimax/model/mark.dart';
+import 'package:algoritmo_minimax/test/globals.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameProvider extends ChangeNotifier{
@@ -18,8 +19,9 @@ class GameProvider extends ChangeNotifier{
   }
 
   void changeMatrixSize(int size){
-    Board.BOARD_WITH = size;
-    board.board = List.generate(size, (_) => List.filled(size,Mark.BLANK));
+    //Board.BOARD_WITH = size;
+    //board.board = List.generate(size, (_) => List.filled(size,Mark.BLANK));
+    Globals.board = List.generate(size, (_) => List.filled(size,''));
     notifyListeners();
   }
 
@@ -64,4 +66,5 @@ class GameProvider extends ChangeNotifier{
     _autoPlay = value;
     notifyListeners();
   }
+
 }

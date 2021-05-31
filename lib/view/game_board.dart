@@ -63,6 +63,20 @@ class _GameBoardState extends State<GameBoard> {
                 Globals.currentPlayer = Globals.ai;
                 var move = bestMove();
                 provider.addLog('Juega IA: $move');
+                final sketch = Sketch();
+                var winner = sketch.checkWinner();
+                provider.addLog('Ganador: ${winner ?? 'Ninguno'}');
+                if (winner != null) {
+                  showAlert(
+                      context,
+                      'Partida Terminada',
+                      winner == 'tie'
+                          ? 'Empate'
+                          : winner == 'X'
+                          ? 'Ha ganado IA'
+                          : 'Ha ganado humano');
+                  return;
+                }
               }
             }
             setState(() {});
