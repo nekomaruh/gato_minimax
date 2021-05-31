@@ -52,7 +52,6 @@ class _GameBoardState extends State<GameBoard> {
     int y = (index % Globals.board.length);
     return GestureDetector(
       onTap: () {
-        print(Globals.maxDepth);
         provider.addLog('Juega humano: [$x,$y]');
         if (provider.isPlaying) {
           final sketch = Sketch();

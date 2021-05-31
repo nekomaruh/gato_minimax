@@ -2,12 +2,12 @@ import 'dart:math';
 import 'globals.dart';
 
 bestMove() {
-  // AI to make its turn
+  // Juega IA
   int bestScore = -9999999;
   var move;
   for (int i = 0; i < Globals.board.length; i++) {
     for (int j = 0; j < Globals.board.length; j++) {
-      // Is the spot available?
+      // Hay espacio?
       if (Globals.board[i][j] == '') {
         Globals.board[i][j] = Globals.ai;
         var score = minimax(Globals.board, Globals.maxDepth, false);
@@ -25,16 +25,18 @@ bestMove() {
   return move;
 }
 
+/* Puntajes */
 var scores = {
   'X': 1,
   'O': -1,
   'tie': 0
 };
 
+/* Algoritmo Minimax */
 minimax(board, depth, isMaximizing) {
 
   int val = evaluateBoard(depth);
-  // Terminal node (win/lose/draw) or max depth reached.
+  // Nodo terminal (ganar/perder/empate) o profundidad alcanzada
   if (val.abs() > 0 || depth == 0 || !anyMovesAvailable()) {
     return val;
   }
@@ -45,9 +47,7 @@ minimax(board, depth, isMaximizing) {
   if (winer != null || depth == 0) {
     return scores[winer];
   }
-
    */
-
 
   if (isMaximizing) {
     int bestScore = -99999999;
@@ -68,7 +68,7 @@ minimax(board, depth, isMaximizing) {
     int bestScore = 99999999;
     for (int i = 0; i < Globals.board.length; i++) {
       for (int j = 0; j < Globals.board.length; j++) {
-        // Is the spot available?
+        // Hay espacio?
         if (board[i][j] == '') {
           board[i][j] = Globals.human;
           //var score = minimax(board, depth + 1, true);
@@ -136,8 +136,6 @@ int evaluateBoard(int depth) {
   for(int i=0; i<Globals.board.length; i++)
     winMarks.add(Globals.board[Globals.board.length-1-i][i]);
   if(equalsN(winMarks)) winner = Globals.board[Globals.board.length-1][0];
-
-
 
   if (winner == null) {
     return 0;
