@@ -1,3 +1,4 @@
+import 'package:algoritmo_minimax/helpers/alert.dart';
 import 'package:algoritmo_minimax/provider/game_controller.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
 import 'package:algoritmo_minimax/ai/globals.dart';
@@ -6,10 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../interface/game_interface.dart';
 
-class GameConfig extends StatelessWidget {
+class GameConfig extends StatefulWidget {
   final GameInterface game;
   GameConfig(this.game);
 
+  @override
+  _GameConfigState createState() => _GameConfigState();
+}
+
+class _GameConfigState extends State<GameConfig> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GameController>(context);
@@ -41,13 +47,11 @@ class GameConfig extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Stack(
-              children: [
-                Container(
-                  color: Colors.grey[200],
-                ),
-                Scrollbar(child: _logList(provider)),
-              ],
+            child: Container(
+              color: provider.logs.length == 0
+                  ? Colors.transparent
+                  : Colors.grey[200],
+              child: Scrollbar(child: _logList(provider)),
             ),
           ),
         ],
@@ -55,7 +59,6 @@ class GameConfig extends StatelessWidget {
     );
   }
 
-  /* Empezar primero */
   Widget _startFirst(GameController provider) {
     return CheckboxListTile(
       title: Text(
@@ -66,7 +69,6 @@ class GameConfig extends StatelessWidget {
     );
   }
 
-  /* Jugar automaticamente */
   CheckboxListTile _autoPlay(GameController provider) {
     return CheckboxListTile(
         value: provider.autoPlay,
@@ -74,7 +76,6 @@ class GameConfig extends StatelessWidget {
         onChanged: provider.isPlaying ? null : (v) => provider.autoPlay = v);
   }
 
-  /* Tamaño de tablero */
   ListTile _boardSize(GameController provider) {
     List<int> d = [2, 3, 4, 5];
     return ListTile(
@@ -98,7 +99,6 @@ class GameConfig extends StatelessWidget {
         ));
   }
 
-  /* Seleccionar K */
   ListTile _selectK(GameController provider) {
     List<int> d = [0, 1, 2, 3, 4, 5, 6];
     return ListTile(
@@ -107,7 +107,7 @@ class GameConfig extends StatelessWidget {
         children: [
           Expanded(child: Text('Valor de K')),
           DropdownButton<int>(
-            value: provider.kValue,
+            value: Globals.maxDepth,
             underline: SizedBox(),
             items: d
                 .map((int value) => DropdownMenuItem<int>(
@@ -115,39 +115,39 @@ class GameConfig extends StatelessWidget {
                       child: Text(value.toString()),
                     ))
                 .toList(),
-            onChanged: provider.isPlaying ? null : (v) => provider.setMaxDepth(v),
+            onChanged:
+                provider.isPlaying ? null : (v) => provider.setMaxDepth(v),
           ),
         ],
       ),
     );
   }
 
-  /* Boton de jugar */
   CupertinoButton _playBtn(GameController provider) {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        onPressed:
-            provider.isPlaying == false ? () => game.playAi(provider) : null,
+        onPressed: provider.isPlaying == false
+            ? () => widget.game.playAi(provider)
+            : null,
         child: Text('Iniciar'));
   }
 
-  /* Boton de reiniciar */
   CupertinoButton _resetBtn(GameController provider) {
     return CupertinoButton.filled(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        onPressed:
-            provider.isPlaying == true ? () => game.reset(provider) : null,
+        onPressed: provider.isPlaying == true
+            ? () => widget.game.reset(provider)
+            : null,
         child: Text('Reiniciar'));
   }
 
-  /* Lista de logs que muestra el juego */
   ListView _logList(GameController provider) {
     return ListView.builder(
       physics: ClampingScrollPhysics(),
       shrinkWrap: true,
       padding: EdgeInsets.all(10),
       itemCount: provider.logs.length,
-      itemBuilder: (context, i) => Text('${i+1}. ${provider.logs[i]}'),
+      itemBuilder: (context, i) => Text('${i + 1}. ${provider.logs[i]}'),
     );
   }
 

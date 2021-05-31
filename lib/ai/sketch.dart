@@ -69,7 +69,7 @@ class Sketch {
 
 
 
-  /*
+/*
   checkWinner() {
     var winner;
 
@@ -115,7 +115,9 @@ class Sketch {
     }
   }
 
-   */
+ */
+
+
 
 
 

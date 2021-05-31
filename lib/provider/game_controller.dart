@@ -2,7 +2,6 @@ import 'package:algoritmo_minimax/ai/globals.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameController extends ChangeNotifier{
-  int _kValue = 0;
   String _gameMode = 'Normal';
   bool _startFirst = false;
   bool _isPlaying = false;
@@ -23,19 +22,9 @@ class GameController extends ChangeNotifier{
   }
 
   void setMaxDepth(int k){
-    _kValue = k;
     Globals.maxDepth = k;
     notifyListeners();
   }
-
-
-  int get kValue => _kValue;
-
-  set kValue(int value) {
-    _kValue = value;
-    notifyListeners();
-  }
-
 
   bool get startFirst => _startFirst;
 
@@ -73,5 +62,4 @@ class GameController extends ChangeNotifier{
     _autoPlay = value;
     notifyListeners();
   }
-
 }

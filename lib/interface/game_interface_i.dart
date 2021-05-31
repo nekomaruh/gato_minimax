@@ -58,7 +58,7 @@ class GameInterfaceImpl implements GameInterface{
   /* Reinicia el juego */
   void reset(GameController provider) {
     provider.resetGameUI();
-    Globals.initGlobals();
+    Globals.initGlobalsWithSize(provider);
   }
 
 }

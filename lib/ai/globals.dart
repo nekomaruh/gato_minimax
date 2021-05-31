@@ -5,7 +5,7 @@ class Globals{
   static String ai;
   static String human;
   static String currentPlayer;
-  static int maxDepth = 0;
+  static int maxDepth = 2;
 
   static initGlobals(){
     board = List.generate(3, (_) => List.filled(3,''));
@@ -15,6 +15,7 @@ class Globals{
   }
 
   static initGlobalsWithSize(GameController provider){
+    board = List.generate(Globals.board.length, (_) => List.filled(Globals.board.length,''));
     ai = 'X';
     human = 'O';
     currentPlayer = Globals.human;
