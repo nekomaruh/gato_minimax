@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:algoritmo_minimax/provider/game_provider.dart';
+import 'package:algoritmo_minimax/test/globals.dart';
 import 'package:algoritmo_minimax/view/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ void main() {
       setWindowMinSize(const Size(500, 350));
     }
   }
+  Globals.initGlobals();
   runApp(MyApp());
    */
   Console console = new Console();

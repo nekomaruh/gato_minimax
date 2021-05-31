@@ -1,5 +1,8 @@
-import 'package:algoritmo_minimax/model/board.dart';
+
 import 'package:algoritmo_minimax/provider/game_provider.dart';
+import 'package:algoritmo_minimax/test/globals.dart';
+import 'package:algoritmo_minimax/test/minimax.dart';
+
 import 'game_interface.dart';
 
 class GameInterfaceImpl implements GameInterface{
@@ -8,42 +11,25 @@ class GameInterfaceImpl implements GameInterface{
   /* Comienza el juego */
   void playAi(GameProvider provider) {
     provider.isPlaying = true;
-    /*
-    int[] move = MiniMaxCombined.getBestMove(board);
-    int row = move[0];
-    int col = move[1];
-    board.placeMark(row, col);
-    for (Node child : gameBoard.getChildren()) {
-    if (GridPane.getRowIndex(child) == row
-    && GridPane.getColumnIndex(child) == col) {
-    Tile t = (Tile) child;
-    t.update();
-    return;
+    if(!provider.startFirst){
+      var log = bestMove();
+      provider.addLog('Juega IA $log');
     }
+    if(provider.autoPlay){
+      autoplayLoop(provider);
     }
-     */
   }
 
   /* Reinicia el juego */
   void reset(GameProvider provider) {
     provider.resetGameUI();
+    Globals.initGlobals();
   }
 
   /* Inicia el loop del juego */
   @override
-  void runGameLoop(GameProvider provider) {
-    Board board = provider.board;
-    if(board.isGameOver()){
-      endGameLoop(provider);
-    }else if (board.isCrossTurn()){
-      playAi(provider);
-    }
-  }
+  void autoplayLoop(GameProvider provider) {
 
-  /* Finaliza el loop del juego */
-  @override
-  void endGameLoop(GameProvider provider) {
-    // TODO: implement endGameLoop
   }
 
 }
