@@ -1,15 +1,13 @@
-import 'package:algoritmo_minimax/model/board.dart';
-import 'package:algoritmo_minimax/model/mark.dart';
+import 'package:algoritmo_minimax/ai/globals.dart';
 import 'package:flutter/cupertino.dart';
 
-class GameProvider extends ChangeNotifier{
-  int _kValue = 2;
+class GameController extends ChangeNotifier{
   String _gameMode = 'Normal';
   bool _startFirst = false;
   bool _isPlaying = false;
   bool _autoPlay = false;
+  bool _isThinking = false;
   List<String> _logs = [];
-  Board board = new Board();
 
   void resetGameUI(){
     _isPlaying = false;
@@ -18,15 +16,14 @@ class GameProvider extends ChangeNotifier{
   }
 
   void changeMatrixSize(int size){
-    Board.BOARD_WITH = size;
-    board.board = List.generate(size, (_) => List.filled(size,Mark.BLANK));
+    //Board.BOARD_WITH = size;
+    //board.board = List.generate(size, (_) => List.filled(size,Mark.BLANK));
+    Globals.board = List.generate(size, (_) => List.filled(size,''));
     notifyListeners();
   }
 
-  int get kValue => _kValue;
-
-  set kValue(int value) {
-    _kValue = value;
+  void setMaxDepth(int k){
+    Globals.maxDepth = k;
     notifyListeners();
   }
 
@@ -47,8 +44,10 @@ class GameProvider extends ChangeNotifier{
   List<String> get logs => _logs;
 
   addLog(String log) {
-    _logs.add(log);
-    notifyListeners();
+    if(_isPlaying){
+      _logs.add(log);
+      notifyListeners();
+    }
   }
 
   String get gameMode => _gameMode;
@@ -62,6 +61,13 @@ class GameProvider extends ChangeNotifier{
 
   set autoPlay(bool value) {
     _autoPlay = value;
+    notifyListeners();
+  }
+
+  bool get isThinking => _isThinking;
+
+  set isThinking(bool value) {
+    _isThinking = value;
     notifyListeners();
   }
 }

@@ -1,9 +1,11 @@
+import 'package:algoritmo_minimax/ai/minimax_alpha_beta.dart';
+import 'package:algoritmo_minimax/ai/sketch.dart';
 import 'package:algoritmo_minimax/helpers/alert.dart';
 import 'package:algoritmo_minimax/interface/game_interface.dart';
-import 'package:algoritmo_minimax/provider/game_provider.dart';
-import 'package:algoritmo_minimax/test/globals.dart';
-import 'package:algoritmo_minimax/test/minimax.dart';
-import 'package:algoritmo_minimax/test/sketch.dart';
+import 'package:algoritmo_minimax/provider/game_controller.dart';
+import 'package:algoritmo_minimax/ai/globals.dart';
+import 'package:algoritmo_minimax/ai/minimax.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,11 +32,11 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
-    final GameProvider provider = Provider.of<GameProvider>(context);
+    final GameController provider = Provider.of<GameController>(context);
     return _buildBoard(provider);
   }
 
-  GridView _buildBoard(GameProvider provider) {
+  GridView _buildBoard(GameController provider) {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: Globals.board.length,
@@ -47,7 +49,7 @@ class _GameBoardState extends State<GameBoard> {
         itemBuilder: (_, index) => _buildMark(provider, index));
   }
 
-  Widget _buildMark(GameProvider provider, int index) {
+  Widget _buildMark(GameController provider, int index) {
     int x = (index / Globals.board.length).floor();
     int y = (index % Globals.board.length);
     return GestureDetector(
@@ -61,7 +63,26 @@ class _GameBoardState extends State<GameBoard> {
               if (Globals.board[x][y] == '') {
                 Globals.board[x][y] = Globals.human;
                 Globals.currentPlayer = Globals.ai;
-                var move = bestMove();
+                final sketch = Sketch();
+                var winner = sketch.checkWinner();
+                provider.addLog('Ganador: ${winner ?? 'Ninguno'}');
+                if (winner != null) {
+                  showAlert(
+                      context,
+                      'Partida Terminada',
+                      winner == 'empate'
+                          ? 'Empate'
+                          : winner == 'X'
+                          ? 'Ha ganado IA'
+                          : 'Ha ganado humano');
+                  return;
+                }
+                var move;
+                if(provider.gameMode == 'Normal'){
+                  move = bestMove();
+                }else{
+                  move = bestMoveAlphaBeta();
+                }
                 provider.addLog('Juega IA: $move');
               }
             }
@@ -73,7 +94,7 @@ class _GameBoardState extends State<GameBoard> {
               showAlert(
                   context,
                   'Partida Terminada',
-                  winner == 'tie'
+                  winner == 'empate'
                       ? 'Empate'
                       : winner == 'X'
                           ? 'Ha ganado IA'
@@ -89,7 +110,7 @@ class _GameBoardState extends State<GameBoard> {
     );
   }
 
-  Widget _setMarkIcon(GameProvider provider, int x, int y) {
+  Widget _setMarkIcon(GameController provider, int x, int y) {
     return Globals.board[x][y] == ''
         ? Container()
         : Globals.board[x][y] == 'X'
@@ -97,7 +118,7 @@ class _GameBoardState extends State<GameBoard> {
             : aiIcon;
   }
 
-  Color setMarkColor(GameProvider provider, int x, int y) {
+  Color setMarkColor(GameController provider, int x, int y) {
     return Globals.board[x][y] == ''
         ? Colors.blueGrey[100]
         : Globals.board[x][y] == 'X'
