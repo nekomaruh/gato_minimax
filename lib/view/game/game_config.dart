@@ -18,9 +18,12 @@ class _GameConfigState extends State<GameConfig> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<GameController>(context);
-    return Padding(
-      padding: const EdgeInsets.all(15),
+    return Align(
+      alignment: Alignment.topCenter,
       child: ListView(
+        physics: ClampingScrollPhysics(),
+        shrinkWrap: true,
+        padding: EdgeInsets.all(15),
         children: [
           _startFirst(provider),
           Divider(),
