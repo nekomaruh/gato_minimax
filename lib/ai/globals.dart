@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:algoritmo_minimax/provider/game_controller.dart';
 

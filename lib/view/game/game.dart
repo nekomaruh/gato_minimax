@@ -50,7 +50,7 @@ class Game extends StatelessWidget {
     return ListView(
       children: [
         GameBoard(game),
-        Container(height: 800, child: GameConfig(game))
+        GameConfig(game)
       ],
     );
   }
