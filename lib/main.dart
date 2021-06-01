@@ -10,7 +10,7 @@ import 'package:window_size/window_size.dart';
 import 'model/Console.dart';
 
 void main() {
-  /*if(!kIsWeb){
+  if(!kIsWeb){
     WidgetsFlutterBinding.ensureInitialized();
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       setWindowTitle('Taller Sistemas Inteligentes - Johan Ordenes - Dino Marín');
@@ -19,7 +19,6 @@ void main() {
   }
   Globals.initGlobals();
   runApp(MyApp());
-   */
   Console console = new Console();
   console.play();
 

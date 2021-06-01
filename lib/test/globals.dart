@@ -16,6 +16,6 @@ class Globals{
     h = 3; // = height / 3;
     ai = 'X';
     human = 'O';
-    currentPlayer = Globals.human;
+    currentPlayer = human;
   }
 }
