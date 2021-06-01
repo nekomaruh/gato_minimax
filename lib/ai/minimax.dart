@@ -151,18 +151,4 @@ int evaluateBoard(int depth) {
     return 0;
   }
 
-  static final MAX_DEPTH = 3;
-
-  Minimax(){
-
-  }
-
-  static int miniMax(Board boad, int depth, bool isMax) {
-    int boardVal;
-  }
-
-
-  static int evaluateBoard(Board board) {
-
-  }
 }
