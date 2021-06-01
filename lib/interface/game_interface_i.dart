@@ -1,5 +1,3 @@
-
-import 'dart:async';
 import 'dart:math';
 
 import 'package:algoritmo_minimax/ai/minimax_alpha_beta.dart';
@@ -7,7 +5,6 @@ import 'package:algoritmo_minimax/ai/sketch.dart';
 import 'package:algoritmo_minimax/provider/game_controller.dart';
 import 'package:algoritmo_minimax/ai/globals.dart';
 import 'package:algoritmo_minimax/ai/minimax.dart';
-import 'package:flutter/foundation.dart';
 
 import 'game_interface.dart';
 
