@@ -28,9 +28,13 @@ class GameInterfaceImpl implements GameInterface{
     Globals.startTime = DateTime.now();
     provider.isPlaying = true;
     if(!provider.startFirst){
-      var move = executeMove(provider);
+      //var move = executeMove(provider);
+      Random random = new Random();
+      int x = random.nextInt(Globals.board.length);
+      int y = random.nextInt(Globals.board.length);
+      Globals.board[x][y] = Globals.ai;
       provider.isThinking = false;
-      provider.addLog('Juega IA $move');
+      provider.addLog('Juega IA [$x,$y]');
     }
     if(provider.autoPlay){
       print('autoplay');

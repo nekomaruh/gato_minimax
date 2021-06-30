@@ -102,12 +102,12 @@ class _GameConfigState extends State<GameConfig> {
   }
 
   ListTile _selectK(GameController provider) {
-    List<int> d = [2, 3, 4, 5, 6];
+    List<int> d = [2, 4, 6, 8, 10, 12];
     return ListTile(
       enabled: !provider.isPlaying,
       title: Row(
         children: [
-          Expanded(child: Text('Valor de K (dificultad)')),
+          Expanded(child: Text('Valor de 2K (profundidad)')),
           DropdownButton<int>(
             value: Globals.maxDepth,
             underline: SizedBox(),
@@ -131,7 +131,9 @@ class _GameConfigState extends State<GameConfig> {
         onPressed: provider.isPlaying == false
             ? () async {
                 provider.isThinking = true;
-                await widget.game.playAi(provider);
+                await Future.delayed(Duration(milliseconds: 500),(){
+                  widget.game.playAi(provider);
+                });
               }
             : null,
         child: Text('Iniciar'));

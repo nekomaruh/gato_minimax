@@ -43,19 +43,11 @@ minimax(board, depth, isMaximizing) {
     return val;
   }
 
-  /*
-  final sketch = Sketch();
-  var winer = sketch.checkWinner();
-  if (winer != null || depth == 0) {
-    return scores[winer];
-  }
-   */
-
   if (isMaximizing) {
     int bestScore = -99999999;
     for (int i = 0; i < Globals.board.length; i++) {
       for (int j = 0; j < Globals.board.length; j++) {
-        // Is the spot available?
+        // Esta disponible?
         if (board[i][j] == '') {
           board[i][j] = Globals.ai;
           //int score = minimax(board, depth + 1, false);
@@ -84,13 +76,14 @@ minimax(board, depth, isMaximizing) {
   }
 }
 
-
+/* Verifica si existe ganador */
 bool equalsN(Set marks) {
   if(marks.length==1 && !marks.contains('')) return true;
   return false;
 }
 
-anyMovesAvailable(){
+/* Existen mas movimientos */
+bool anyMovesAvailable(){
   int openSpots = 0;
   for (int i = 0; i < Globals.board.length; i++) {
     for (int j = 0; j < Globals.board.length; j++) {
@@ -102,7 +95,7 @@ anyMovesAvailable(){
   return openSpots > 0? true: false;
 }
 
-
+/* Analiza el ganador */
 int evaluateBoard(int depth) {
   var winner;
 
@@ -116,7 +109,6 @@ int evaluateBoard(int depth) {
     }
     if (equalsN(winMarks)) winner = Globals.board[x][0];
   }
-
 
   // Vertical
   for (int x = 0; x < Globals.board.length; x++) {

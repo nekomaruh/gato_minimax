@@ -14,7 +14,7 @@ class Globals{
     ai = 'X';
     human = 'O';
     currentPlayer = human;
-    maxDepth = 2;
+    maxDepth = 12;
   }
 
   static reloadVariables(GameController provider){

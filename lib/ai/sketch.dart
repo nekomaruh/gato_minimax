@@ -61,6 +61,39 @@ class Sketch {
 
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
   equals3(a, b, c) {
     return a == b && b == c && a != '';
